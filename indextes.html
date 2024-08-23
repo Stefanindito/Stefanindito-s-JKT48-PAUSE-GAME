@@ -244,7 +244,7 @@
                     images2.forEach(image => image.style.display = 'none');
                     images2[currentIndex2].style.display = 'block';
                     currentIndex2 = (currentIndex2 + 1) % images2.length;
-                }, 100);
+                }, 800);
 
                 document.addEventListener('keydown', function(event) {
                     if (event.code === 'Space') {
@@ -286,7 +286,7 @@
                         loadingBar.style.width = width + '%';
                         loadingBar.textContent = width + '%';
                     }
-                }, 10); // Adjust the interval to control loading speed
+                }, 800); // Adjust the interval to control loading speed
             }
 
             // Simulate loading and then start the game
