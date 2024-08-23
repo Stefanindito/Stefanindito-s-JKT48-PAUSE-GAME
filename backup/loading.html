@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #f0f0f5;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #ffefba, #ffffff);
+        }
+
+        .loading-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .loading-text {
+            font-size: 24px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        #loadingBar {
+            width: 100%;
+            height: 20px;
+            background-color: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        #progress {
+            height: 100%;
+            width: 0;
+            background-color: #f76c6c;
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <p class="loading-text"><b>Member lagi siap-siap..</b></p>
+        <div id="loadingBar">
+            <div id="progress"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate data loading
+            let progress = document.getElementById('progress');
+            let width = 0;
+
+            function updateProgress() {
+                if (width >= 100) {
+                    // Redirect to the game page
+                    window.location.href = 'index.html'; // Ensure this matches your actual game page file name
+                } else {
+                    width += 2; // Increase the progress
+                    progress.style.width = width + '%';
+                    setTimeout(updateProgress, 50); // Update every 50ms
+                }
+            }
+
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

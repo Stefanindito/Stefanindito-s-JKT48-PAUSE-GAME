@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        /* Existing styles */
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <p class="loading-text">Loading game data...</p>
+        <div id="loadingBar">
+            <div id="progress"></div>
+        </div>
+    </div>
+
+    <script>
+        function loadGameData() {
+            return new Promise((resolve, reject) => {
+                // Dynamically create an iframe to load gamepage.html
+                let iframe = document.createElement('iframe');
+                iframe.src = 'index tes.html';
+                iframe.style.display = 'none';
+                iframe.onload = () => {
+                    // Access the iframe's contentWindow to call the preloadGameData function
+                    let iframeWindow = iframe.contentWindow;
+                    if (iframeWindow && iframeWindow.preloadGameData) {
+                        iframeWindow.preloadGameData().then(resolve).catch(reject);
+                    } else {
+                        reject(new Error('Unable to access preloadGameData function.'));
+                    }
+                };
+                iframe.onerror = reject;
+                document.body.appendChild(iframe);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let progress = document.getElementById('progress');
+            let width = 0;
+
+            function updateProgress() {
+                if (width >= 100) {
+                    // Redirect to the game page
+                    window.location.href = 'index tes.html';
+                } else {
+                    width += 2; // Increase the progress
+                    progress.style.width = width + '%';
+                    setTimeout(updateProgress, 50); // Update every 50ms
+                }
+            }
+
+            loadGameData().then(() => {
+                // Start progress bar update after game data is loaded
+                updateProgress();
+            }).catch(error => {
+                console.error('Error loading game data:', error);
+                // Handle error and possibly redirect or show an error message
+            });
+        });
+    </script>
+</body>
+</html>

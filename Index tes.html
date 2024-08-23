@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JKT48 Pause Game</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #f0f0f5;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .page {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background: linear-gradient(to bottom right, #ffefba, #ffffff);
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        p {
+            font-size: 24px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        #image-container {
+            position: relative;
+            width: 400px;
+            height: 500px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+            background: #fff;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #image-container-2 {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        #image-container:hover, #image-container-2:hover {
+            transform: scale(1.05);
+        }
+        
+        .game-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            display: none;
+        }
+        
+        #nextButton {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #f76c6c;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        
+        #nextButton:hover {
+            background-color: #ff4c4c;
+            transform: translateY(-3px);
+        }
+        
+        #nextButton:active {
+            transform: translateY(1px);
+        }
+
+        /* Loading Page Styles */
+        #loadingPage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #ffefba, #ffffff);
+            flex-direction: column;
+        }
+
+        #loadingBar {
+            width: 80%;
+            max-width: 600px;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            height: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #loadingProgress {
+            width: 0;
+            height: 100%;
+            background: #f76c6c;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-weight: bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Halaman Loading -->
+    <div id="loadingPage">
+        <div id="loadingBar">
+            <div id="loadingProgress">0%</div>
+        </div>
+        <p>Member lagi siap-siap, Mohon Ditunggu.. </p>
+    </div>
+
+    <!-- Halaman Pertama -->
+    <div id="page1" class="page">
+        <p>Mau melamar siapa nih?</p>
+        <div id="image-container">
+            <img id="image1" src="zee/zee.jpg" alt="Gambar 1" class="game-image">
+            <img id="image2" src="eli/Eli.jpg" alt="Gambar 2" class="game-image">
+            <img id="image3" src="shani/shani.jpg" alt="Gambar 3" class="game-image">
+            <img id="image4" src="chika/chika.jpg" alt="Gambar 4" class="game-image">
+            <img id="image5" src="indah/indah.jpg" alt="Gambar 5" class="game-image">
+            <img id="image6" src="jessi/jessi.jpg" alt="Gambar 6" class="game-image">
+            <img id="image7" src="cat/cat.jpg" alt="Gambar 6" class="game-image">
+            <img id="error" src="error" alt="error" class="game-image">
+            <!-- <img id="image8" src="freya/freya.jpg" alt="Gambar 7" class="game-image"> -->
+        </div>
+        <audio id="audio1" src="zee/zee.mp3"></audio>
+        <audio id="audio2" src="eli/eli.mp3"></audio>
+        <audio id="audio3" src="shani/shani.mp3"></audio>
+        <audio id="audio4" src="chika/chika.mp3"></audio>
+        <audio id="audio5" src="indah/indah.mp3"></audio>
+        <audio id="audio6" src="jessi/jessi.mp3"></audio>
+        <audio id="audio7" src="cat/Cat.mp3"></audio>
+        <!-- <audio id="audio8" src="freya/freya.mp3"></audio> -->
+        <button id="restartButton1" style="display:none;">Restart</button>
+    </div>
+
+    <!-- Halaman Kedua -->
+    <div id="page2" class="page">
+        <div id="image-container-2">
+            <img id="accepted" src="terima.png" alt="Diterima" class="game-image">
+            <img id="rejected" src="tolak.png" alt="Ditolak" class="game-image">
+        </div>
+        <!-- Audio untuk setiap gambar di halaman pertama (diterima/ditolak) -->
+        <audio id="audio1_accepted" src="zee/terima zee.mp3"></audio>
+        <audio id="audio1_rejected" src="zee/tolakan zee.mp3"></audio>
+        <audio id="audio2_accepted" src="eli/terima eli.mp3"></audio>
+        <audio id="audio2_rejected" src="eli/tolakan eli.mp3"></audio>
+        <audio id="audio3_accepted" src="shani/terima shani.mp3"></audio>
+        <audio id="audio3_rejected" src="shani/tolakan shani.mp3"></audio>
+        <audio id="audio4_accepted" src="chika/terima chika.mp3"></audio>
+        <audio id="audio4_rejected" src="chika/tolakan chika.mp3"></audio>
+        <audio id="audio5_accepted" src="indah/terima indah.mp3"></audio>
+        <audio id="audio5_rejected" src="indah/tolakan indah.mp3"></audio>
+        <audio id="audio6_accepted" src="jessi/terima jessi.mp3"></audio>
+        <audio id="audio6_rejected" src="jessi/tolakan jessi.mp3"></audio>
+        <audio id="audio7_accepted" src="cat/laughing frog.mp3"></audio>
+        <audio id="audio7_rejected" src="cat/laughing frog.mp3"></audio>
+        <!-- <audio id="audio8_accepted" src="freya/terima freya.mp3"></audio>
+        <audio id="audio8_rejected" src="freya/tolakan freya.mp3"></audio> -->
+        <button id="nextButton" style="display:none;">Next</button>
+        <button id="restartButton2" style="display:none;">Restart</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let images = document.querySelectorAll('#image-container .game-image');
+            let currentIndex = 0;
+            let isStopped = false;
+            let page1 = document.getElementById('page1');
+            let page2 = document.getElementById('page2');
+            let audios = [
+                document.getElementById('audio1'),
+                document.getElementById('audio2'),
+                document.getElementById('audio3'),
+                document.getElementById('audio4'),
+                document.getElementById('audio5'),
+                document.getElementById('audio6'),
+                document.getElementById('audio7')
+            ];
+            let selectedAudioIndex = null;
+
+            function flashImages() {
+                images.forEach(image => image.style.display = 'none');
+                images[currentIndex].style.display = 'block';
+                currentIndex = (currentIndex + 1) % images.length;
+            }
+
+            let interval = setInterval(flashImages, 10);
+
+            document.addEventListener('keydown', function(event) {
+                if (event.code === 'Space' && !isStopped) {
+                    clearInterval(interval);
+                    isStopped = true;
+                    selectedAudioIndex = currentIndex - 1;
+                    let selectedAudio = audios[selectedAudioIndex];
+                    if (selectedAudio) {
+                        selectedAudio.play();
+                        selectedAudio.addEventListener('ended', function() {
+                            let nextButton = document.createElement('button');
+                            nextButton.id = 'nextButton';
+                            nextButton.textContent = 'Next';
+                            nextButton.addEventListener('click', function() {
+                                page1.style.display = 'none';
+                                page2.style.display = 'flex';
+                                startSecondPage(selectedAudioIndex);
+                            });
+                            page1.appendChild(nextButton);
+                        });
+                    } else {
+                        console.error('Selected audio not found for index:', selectedAudioIndex);
+                    }
+                }
+            });
+
+            function startSecondPage(selectedIndex) {
+                let images2 = document.querySelectorAll('#image-container-2 .game-image');
+                let currentIndex2 = 0;
+                let interval2 = setInterval(function() {
+                    images2.forEach(image => image.style.display = 'none');
+                    images2[currentIndex2].style.display = 'block';
+                    currentIndex2 = (currentIndex2 + 1) % images2.length;
+                }, 100);
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.code === 'Space') {
+                        clearInterval(interval2);
+                        let finalImage = images2[(currentIndex2 - 1 + images2.length) % images2.length];
+                        let finalAudio;
+                        if (finalImage.id === 'accepted') {
+                            finalAudio = document.getElementById(`audio${selectedIndex + 1}_accepted`);
+                        } else if (finalImage.id === 'rejected') {
+                            finalAudio = document.getElementById(`audio${selectedIndex + 1}_rejected`);
+                        }
+                        if (finalAudio) {
+                            finalAudio.play();
+                            finalAudio.addEventListener('ended', function() {
+                                let nextButton = document.getElementById('nextButton');
+                                if (nextButton) {
+                                    nextButton.style.display = 'block';
+                                } else {
+                                    console.error('Next button not found.');
+                                }
+                            });
+                        } else {
+                            console.error('Final audio not found for image ID:', finalImage.id);
+                        }
+                    }
+                });
+            }
+
+            function simulateLoading() {
+                let loadingBar = document.getElementById('loadingProgress');
+                let width = 0;
+                let interval = setInterval(function() {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        document.getElementById('loadingPage').style.display = 'none';
+                        page1.style.display = 'flex';
+                    } else {
+                        width++;
+                        loadingBar.style.width = width + '%';
+                        loadingBar.textContent = width + '%';
+                    }
+                }, 10); // Adjust the interval to control loading speed
+            }
+
+            // Simulate loading and then start the game
+            simulateLoading();
+        });
+    </script>
+</body>
+</html>
